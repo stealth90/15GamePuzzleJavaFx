@@ -3,8 +3,15 @@
     -fx-background-size: auto 100%;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
-
 }
+
+#gridgame{
+    -fx-border-width: 10px;
+    -fx-border-style: solid;
+    -fx-border-color: #3b1a0f;
+    -fx-border-radius: 5px;
+}
+
 .cellNumber{
     -fx-background-color: white;
     -fx-id:number;
@@ -23,8 +30,57 @@
 }
 
 #playbutton{
-    -fx-background-image: url("playbutton.png");
-    -fx-background-size: 100% auto;
+    -fx-background-image: url("play.png");
+    -fx-background-size: 100%;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
+    -fx-background-radius: 50%;
+    -fx-min-width: 80px;
+    -fx-min-height: 80px;
+    -fx-max-width: 80px;
+    -fx-max-height: 80px;
+}
+
+#clock{
+    -fx-background-image: url("clock.png");
+    -fx-background-size: 90%;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-min-width: 50px;
+    -fx-min-height: 50px;
+    -fx-max-width: 50px;
+    -fx-max-height: 50px;
+}
+
+#borderClock{
+    -fx-background-color: white;
+    -fx-background-radius: 5em;
+    -fx-min-width: 51px;
+    -fx-min-height: 51px;
+    -fx-max-width: 51px;
+    -fx-max-height: 51px;
+
+}
+
+#backgroundArrows{
+    -fx-background-color: white;
+    -fx-background-radius: 10px;
+}
+
+#paneRecord{
+    -fx-background-image: url("cellZero.jpg");
+    -fx-background-size: 100%;
+}
+
+#borderRecord{
+    -fx-border-color: #3b1a0f;
+    -fx-border-width: 6px;
+    -fx-border-style: solid;
+    -fx-border-radius: 10px;
+}
+
+
+#listRecord{
+    -fx-background-image: url("wall.jpg");
+    -fx-background-size: contain;
 }
