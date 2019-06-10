@@ -46,7 +46,6 @@ public class Controller {
         for(Node i: gridPane.getChildren()){
             if( i instanceof Label) ((Label) i).setText(String.valueOf(counter++));
         }
-
         win();
     }*/
 
@@ -113,80 +112,82 @@ public class Controller {
         }
     }
 
-        private void addLabel () {
-            int counter = 0;
-            zeroLabel.getStyleClass().remove("one");
-            zeroLabel.getStyleClass().add("cellNumber");
-            for (Node i : gridPane.getChildren()) {
-                if (i instanceof Label) {
-                    if (gridGames.randomNumbers[counter].toString().equals("0")) {
-                        ((Label) i).setText("");
-                        i.getStyleClass().remove("cellNumber");
-                        i.getStyleClass().add("one");
-                        counter++;
-                    } else {
-                        ((Label) i).setText(gridGames.randomNumbers[counter++].toString());
-                        ((Label) i).getStyleClass().remove("cellNumber");
-                        ((Label) i).getStyleClass().add("cellNumber");
-                    }
+    private void addLabel () {
+        int counter = 0;
+        zeroLabel.getStyleClass().remove("one");
+        zeroLabel.getStyleClass().add("cellNumber");
+        for (Node i : gridPane.getChildren()) {
+            if (i instanceof Label) {
+                if (gridGames.randomNumbers[counter].toString().equals("0")) {
+                    ((Label) i).setText("");
+                    i.getStyleClass().remove("cellNumber");
+                    i.getStyleClass().add("one");
+                    counter++;
+                } else {
+                    ((Label) i).setText(gridGames.randomNumbers[counter++].toString());
+                    ((Label) i).getStyleClass().remove("cellNumber");
+                    ((Label) i).getStyleClass().add("cellNumber");
                 }
             }
         }
-        public void getZeroLabel () {
-            for (Node i : gridPane.getChildren()) {
-                if (i instanceof Label) {
-                    if (((Label) i).getText().equals("")) {
-                        zeroLabel = (Label) i;
-                        zeroLabel.setFocusTraversable(true);
-                        break;
-                    }
+    }
+    public void getZeroLabel () {
+        for (Node i : gridPane.getChildren()) {
+            if (i instanceof Label) {
+                if (((Label) i).getText().equals("")) {
+                    zeroLabel = (Label) i;
+                    zeroLabel.setFocusTraversable(true);
+                    break;
                 }
             }
         }
+    }
 
 
-        public int getIndex ( int column, int row){
-            return row * 4 + column;
-        }
+    public int getIndex ( int column, int row){
+        return row * 4 + column;
+    }
 
-        public void win () {
-            int[][] gridCompare = new int[][]{{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}, {13, 14, 15, 0}};
-            int counter = 1;
-            for (int i = 0; i < gridCompare.length; i++) {
-                for (int j = 0; j < gridCompare[i].length; j++) {
-                    if (gridGames.gridOfGame[i][j] != gridCompare[i][j]) return ;
-                    else ++counter;
-                    if (counter == 16) {
-                        String wordVictory = "You Won !       ";
-                        int position = 0;
-                        for (Node node : gridPane.getChildren()) {
-                            if (node instanceof Label) {
-                                ((Label) node).setText(wordVictory.substring(position, ++position));
-                            }
+    public boolean win () {
+        int[][] gridCompare = new int[][]{{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}, {13, 14, 15, 0}};
+        int counter = 1;
+        for (int i = 0; i < gridCompare.length; i++) {
+            for (int j = 0; j < gridCompare[i].length; j++) {
+                if (gridGames.gridOfGame[i][j] != gridCompare[i][j]) return false;
+                else ++counter;
+                if (counter == 16) {
+                    String wordVictory = "You Won !       ";
+                    int position = 0;
+                    for (Node node : gridPane.getChildren()) {
+                        if (node instanceof Label) {
+                            ((Label) node).setText(wordVictory.substring(position, ++position));
                         }
                     }
                 }
             }
         }
-        public void startTimer () {
-            DateFormat timeFormat = new SimpleDateFormat("mm:ss");
-            long startTimer = (System.currentTimeMillis());
-            final Timeline timeline = new Timeline(
-                    new KeyFrame(
-                            Duration.millis(1),
-                            event -> {
-                                final long diff = System.currentTimeMillis() - startTimer;
-                                if (diff <= 0) {
-                                    //  timeLabel.setText( "00:00:00" );
-                                    timer.setText(timeFormat.format(timeFormat));
-                                } else {
-                                    timer.setText(timeFormat.format(diff));
-                                }
-                            }
-                    )
-            );
-            timeline.setCycleCount(Animation.INDEFINITE);
-            timeline.play();
-        }
-
+        return true;
     }
+    public void startTimer () {
+        DateFormat timeFormat = new SimpleDateFormat("mm:ss");
+        long startTimer = (System.currentTimeMillis());
+        final Timeline timeline = new Timeline(
+                new KeyFrame(
+                        Duration.millis(1),
+                        event -> {
+                            final long diff = System.currentTimeMillis() - startTimer;
+                            if (diff <= 0) {
+                                //  timeLabel.setText( "00:00:00" );
+                                timer.setText(timeFormat.format(timeFormat));
+                            } else {
+                                timer.setText(timeFormat.format(diff));
+                            }
+                        }
+                )
+        );
+        if (win()) timeline.stop();
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
+    }
+
+}
